@@ -5,7 +5,7 @@ import ShoppingCartPage from "./pages/ShoppingCartPage";
 function App() {
   return (
     <>
-      <Homepage></Homepage>
+      <HomePage></HomePage>
       <h1 className="header_name sixtyfour">Almighty's</h1>
       <BrowserRouter>
         <Routes>

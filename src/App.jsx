@@ -1,5 +1,3 @@
-import { useState } from "react";
-import "./App.css";
 import Homepage from "../../react-worldwise-app/src/pages/Homepage";
 
 function App() {

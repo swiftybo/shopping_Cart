@@ -1,3 +1,11 @@
+import Header from "../components/Header";
+import ProductList from "../components/ProductList";
+
 export default function HomePage() {
-  return <div>Homepage</div>;
+  return (
+    <>
+      <Header />
+      <ProductList />
+    </>
+  );
 }

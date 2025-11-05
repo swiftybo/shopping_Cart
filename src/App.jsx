@@ -1,5 +1,13 @@
-export default function App() {
+import Homepage from "../../react-worldwise-app/src/pages/Homepage";
 
-  return ()
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <Homepage />
+    </>
+  );
 }
 
+export default App;

@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-export default function Header() {
+function Header() {
   return (
     <>
-      <h1>Almighty's</h1>
+      <h1 className="header_name sixtyfour">Almighty's</h1>
     </>
   );
 }
-=======
-function Header() {
-  return <div>Header</div>;
-}
 
 export default Header;
->>>>>>> main

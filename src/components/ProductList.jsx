@@ -1,3 +1,5 @@
+import ProductItem from "./ProductItem.jsx";
+
 const catalogue = [
   {
     name: "Broccoli",
@@ -10,4 +12,18 @@ const catalogue = [
   { name: "Leek", stock: 4, price: 0.9, category: "vegetable" },
 ];
 
-function productList() {}
+function ProductList() {
+  return (
+    <>
+      {catalogue.map((food) => (
+        <ProductItem
+          name={food.name}
+          stock={food.stock}
+          price={food.price}
+        ></ProductItem>
+      ))}
+    </>
+  );
+}
+
+export default ProductList;

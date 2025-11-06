@@ -20,8 +20,10 @@ function reducer(state, action) {
       return [...state, { productName: action.payload, quantity: 1 }];
     case "increase_quantity":
       state.map((product) => {
-        if (product.productName === action.payload) {
+        if (product.productName !== action.payload) {
+          return;
         }
+
         console.log(`product is still ${product["productName"]}`);
 
         // Finding index of the productItem object with the name equivalent to action.payload

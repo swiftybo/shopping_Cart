@@ -1,4 +1,4 @@
-function ProductItem({ name, stock, price, category }) {
+function ProductItem({ name, stock, price, handleClick }) {
   return (
     <section className="productIcon">
       <div className="productIcon-left">
@@ -6,7 +6,9 @@ function ProductItem({ name, stock, price, category }) {
         <div style={{ fontSize: "1.2rem" }}>${price.toFixed(2)}</div>
       </div>
       <div className="productIcon-right">
-        <button className="productIcon_btn">Add to Cart</button>
+        <button className="productIcon_btn" onClick={handleClick}>
+          Add to Cart
+        </button>
         {stock <= 5 && (
           <div className="productIcon-stock">Almost Gone! Stock: {stock}</div>
         )}

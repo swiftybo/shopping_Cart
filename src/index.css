@@ -15,3 +15,8 @@
   font-style: normal;
   font-variation-settings: "BLED" 0, "SCAN" 0;
 }
+
+.shopping-cart {
+  display: flex;
+  border: solid 1px black;
+}

@@ -1,7 +1,10 @@
 import ProductItem from "./ProductItem.jsx";
 import { useReducer } from "react";
 
-const initialState = [{ productName: "apple", quantity: 2 }];
+const initialState = [
+  { productName: "Leek", quantity: 2 },
+  { productName: "Broccoli", quantity: 5 },
+];
 const catalogue = [
   {
     name: "Broccoli",
@@ -16,57 +19,43 @@ const catalogue = [
 
 function reducer(state, action) {
   switch (action.type) {
+    // Add a new object with the action.payload being the name of the product to the shopping cart state array
     case "add_product":
       return [...state, { productName: action.payload, quantity: 1 }];
-    case "increase_quantity":
-      state.map((product) => {
+    case "increase_quantity": {
+      // Iterates through the shopping cart state array to find a match for a specific product, e.g. apple
+      const newState = state.map((product) => {
         if (product.productName === action.payload) {
+          // Updates the quantity of the desired product
+          return {
+            productName: product.productName,
+            quantity: product.quantity + 1,
+          };
+          // For all items in the shopping cart array, dont do any changes
+        } else {
+          return product;
         }
-        console.log(`product is still ${product["productName"]}`);
-
-        // Finding index of the productItem object with the name equivalent to action.payload
-        const currentProductIndex = state.findIndex(
-          (product) => product.productName === "apple"
-        );
-
-        // Saving the previous quantity of this productItem in a separate variable
-        const previousQuantity = state[currentProductIndex].quantity;
-
-        // Creating new object with updated quantity value
-        const updatedProduct = {
-          ...state[currentProductIndex],
-          quantity: previousQuantity + 1,
-        };
-
-        const newState = [...state];
-        newState[currentProductIndex] = updatedProduct;
-        console.log(newState);
-
-        return newState;
       });
+      // return the new state of the shopping cart with quantity increased for a specific product
+      return newState;
+    }
 
     default:
       return state;
   }
-
-  // (action.type === "add_product") {
-  //   return {
-
-  //     apple: state.apple + 1,
-  //   };
-  // }
-  // throw Error("unkown action");
 }
 
 function ProductList() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Adds a new object of a product to the shopping cart state
   function handleAddToCart() {
     dispatch({ type: "add_product", payload: "apple" });
   }
 
-  function handleIncreaseQuantity() {
-    dispatch({ type: "increase_quantity", payload: "apple" });
+  // Increases quantity of existing products in the shopping cart state
+  function handleIncreaseQuantity(product) {
+    dispatch({ type: "increase_quantity", payload: product });
   }
 
   return (
@@ -76,7 +65,7 @@ function ProductList() {
           name={food.name}
           stock={food.stock}
           price={food.price}
-          handleClick={handleIncreaseQuantity}
+          handleClick={() => handleIncreaseQuantity(food.name)}
         ></ProductItem>
       ))}
       <div>You have {state[0]?.quantity} apples in your cart!</div>

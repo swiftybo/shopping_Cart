@@ -34,6 +34,7 @@ describe("user able to add in-stock items to cart from homepage catalogue", () =
   // 1. button is found within the fetched productIcon element, making it more reliable than the above solution.
   // 2. The final assertion uses regex assertion making use of cypress' retryability.
   it("should be able to add to cart if in stock", () => {
+    // loops through each productIcon and gets first product that has more than 1 in stock
     cy.get(".productIcon")
       .each(function (el, index) {
         const stockNum = el.find("[id='stock_count']").text().split(" ")[0];
@@ -44,15 +45,18 @@ describe("user able to add in-stock items to cart from homepage catalogue", () =
         }
       })
       .then(function () {
+        // clicks the "add to cart" button in productIcon
         cy.get(".productIcon")
           .eq(this.productIndex)
           .find(".productIcon_btn")
           .click();
+
+        // checks if stock count has decreased by 1
         cy.get(".productIcon")
           .eq(this.productIndex)
           .find("[id='stock_count']")
 
-          // this should is much better as it utilizes cypress' retryability, more readable and
+          // this should is much better as it utilizes cypress' retryability and is more readable
           .should("contain", this.stockNum - 1);
 
         // using 'then()' breaks the loop and no longer uses cypress' benefits. cy.wrap() doesn't work as it usually would here
@@ -66,6 +70,7 @@ describe("user able to add in-stock items to cart from homepage catalogue", () =
   });
 
   it("should not be able to add to cart when stock reaches 0", () => {
+    // loops through each productIcon and gets first product that has only 1 in stock
     cy.get(".productIcon")
       .each(function (el, index) {
         const stockNum = el.find("[id='stock_count']").text();
@@ -75,30 +80,32 @@ describe("user able to add in-stock items to cart from homepage catalogue", () =
         }
       })
       .then(function () {
+        // clicks the "add to cart" button in productIcon
         cy.get(".productIcon")
           .eq(this.productIndex)
           .find(".productIcon_btn")
           .click();
 
+        // checks if "Add to cart" button is now disabled
         cy.get(".productIcon")
           .eq(this.productIndex)
           .find(".productIcon_btn")
           .should("be.disabled");
 
-        // This is now out of scope of this test and has been decided to be captured in another test suite which
-        // tests the different "stock messages" based on stock count.
-        // cy.get(".productIcon")
-        //   .eq(this.productIndex)
-        //   .find("[id='stock_count']")
-        //   .should("have.text", "Out of stock");
+        // checks if stock count has decreased by 1 to 0. This is signified by "Out of stock"
+        cy.get(".productIcon")
+          .eq(this.productIndex)
+          .find("[id='stock_count']")
+          .should("have.text", "Out of stock");
 
+        // Alternative solution to getting the text from element - using cy.invoke("text")
         // cy.get(".productIcon")
         //   .eq(this.productIndex)
         //   .find("[id='stock_count']")
         //   .invoke("text")
         //   .should("equal", "Out of stock");
 
-        // This does NOT work as text()
+        // This does NOT work as text() is a jqeury method. cy.get() returns  aCypress Command Object as so
         // cy.get(".productIcon")
         //   .eq(this.productIndex)
         //   .find("[id='stock_count']")

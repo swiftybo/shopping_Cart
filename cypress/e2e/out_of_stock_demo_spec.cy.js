@@ -51,7 +51,7 @@ describe("user is unable to add items to cart when product becomes out of stock 
       });
   });
 
-  it.skip("should not be able to add to cart if product is already out of stock when customer visits page", () => {
+  it("should not be able to add to cart if product is already out of stock when customer visits page", () => {
     let itemFound = false;
 
     cy.get(".productIcon")
@@ -83,7 +83,7 @@ describe("user is unable to add items to cart when product becomes out of stock 
   });
 
   // This is a shorter way of looking through the productIcons to find one which is "Out of stock". It uses the cy.parent() method to stay within the same fetched productIcon.
-  it.skip("should not be able to add to cart if product is already out of stock when customer visits page", () => {
+  it("should not be able to add to cart if product is already out of stock when customer visits page", () => {
     // Filter to fetch a productIcon which is 'Out of stock'
     cy.contains(".productIcon", "Out of stock")
 
